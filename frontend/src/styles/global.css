@@ -1,0 +1,49 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f5f7fb;
+  color: #1f2937;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* PostureAI premium gradient refresh */
+
+:root { color-scheme: light; --ink:#101828; --muted:#667085; --line:rgba(148,163,184,.22); --surface:rgba(255,255,255,.88); --blue:#4f46e5; --violet:#8b5cf6; --cyan:#06b6d4; }
+html { scroll-behavior:smooth; }
+body { color:var(--ink); background:radial-gradient(ellipse at 8% 0%,rgba(99,102,241,.10),transparent 34%),radial-gradient(ellipse at 95% 12%,rgba(6,182,212,.08),transparent 30%),#f5f7ff; }
+button { transition:transform .2s ease, box-shadow .2s ease, filter .2s ease; }
+button:focus-visible,a:focus-visible,input:focus-visible { outline:3px solid rgba(99,102,241,.32); outline-offset:3px; }
+::selection { background:rgba(99,102,241,.2); }
+
+
+/* Refined PostureAI visual system */
+:root{--ink:#172033;--muted:#748097;--line:rgba(149,165,195,.24);--panel:rgba(255,255,255,.78);--brand:#6157e8;--brand2:#9b5de5;--aqua:#51c8d8}
+body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(135deg,#e8f6fa 0%,#edf0ff 50%,#f8eafa 100%);color:var(--ink)}
+button{font-weight:650}
