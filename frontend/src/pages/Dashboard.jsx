@@ -4,17 +4,10 @@ import DashboardCard from "../components/dashboard/DashboardCard";
 import SessionSummary from "../components/dashboard/SessionSummary";
 import RecentSessions from "../components/dashboard/RecentSessions";
 import useDashboardData from "../hooks/useDashboardData";
+import { formatDuration } from "../utils/formatDuration";
 
 import "../styles/dashboard.css";
 
-function formatDuration(seconds) {
-  if (!seconds) return "0m";
-
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-
-  return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
-}
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -24,16 +17,17 @@ function Dashboard() {
     totalMonitoringSeconds,
     goodPostureSeconds,
     poorPostureSeconds,
+    classifiedSeconds,
     postureScore,
     recentTrend,
   } = useDashboardData();
 
   const userName = user?.name?.split(" ")[0] || "there";
-  const goodPercentage = totalMonitoringSeconds
-    ? Math.round((goodPostureSeconds / totalMonitoringSeconds) * 100)
+  const goodPercentage = classifiedSeconds
+    ? Math.round((goodPostureSeconds / classifiedSeconds) * 100)
     : 0;
-  const poorPercentage = totalMonitoringSeconds
-    ? Math.round((poorPostureSeconds / totalMonitoringSeconds) * 100)
+  const poorPercentage = classifiedSeconds
+    ? Math.round((poorPostureSeconds / classifiedSeconds) * 100)
     : 0;
 
   return (
@@ -70,14 +64,14 @@ function Dashboard() {
         <DashboardCard
           title="Good Posture"
           value={formatDuration(goodPostureSeconds)}
-          subtitle={totalMonitoringSeconds ? `${goodPercentage}% of monitored time` : "No data yet"}
+          subtitle={totalMonitoringSeconds ? `${goodPercentage}% of classified time` : "No data yet"}
           icon="✓"
           accent="green"
         />
         <DashboardCard
           title="Poor Posture"
           value={formatDuration(poorPostureSeconds)}
-          subtitle={totalMonitoringSeconds ? `${poorPercentage}% of monitored time` : "No data yet"}
+          subtitle={totalMonitoringSeconds ? `${poorPercentage}% of classified time` : "No data yet"}
           icon="!"
           accent="orange"
         />
@@ -126,7 +120,7 @@ function Dashboard() {
           </button>
           <div className="quick-action-meta">
             <span>● Camera-based</span>
-            <span>● Real-time AI</span>
+            <span>● On-device pose analysis</span>
           </div>
         </div>
       </section>

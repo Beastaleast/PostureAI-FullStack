@@ -1,34 +1,26 @@
 import "../../styles/monitor.css";
 
-function PostureStatus({ posture = "WAITING", isMonitoring = false }) {
+function PostureStatus({ posture = "WAITING", isMonitoring = false, message = "" }) {
   const isGood = posture === "GOOD";
-  const isWaiting = posture === "WAITING" || !isMonitoring;
-
+  const isWaiting = posture === "WAITING";
   const title = isWaiting
-    ? "WAITING FOR AI"
+    ? (isMonitoring ? "WAITING FOR BODY POSITION" : "READY FOR POSTURE CHECK")
     : isGood
       ? "GOOD POSTURE"
-      : "POOR POSTURE";
-
-  const message = isWaiting
-    ? "Start monitoring and the AI result will appear here."
+      : "POOR POSTURE — ADJUST";
+  const defaultMessage = isWaiting
+    ? "Bring your shoulders, neck, back, hips, knees, and feet into view."
     : isGood
-      ? "Keep maintaining your current position."
-      : "Please adjust your sitting position.";
+      ? "Your shoulder, neck, back, and seated-leg alignment currently looks within the selected ranges."
+      : "One or more posture checks is outside the target range. Adjust your sitting position and watch the feedback.";
 
   return (
-    <div
-      className={`posture-status-card ${
-        isWaiting ? "posture-waiting" : isGood ? "posture-good" : "posture-bad"
-      }`}
-    >
-      <div className="posture-status-icon">
-        {isWaiting ? "…" : isGood ? "✓" : "!"}
-      </div>
+    <div className={`posture-status-card ${isWaiting ? "posture-waiting" : isGood ? "posture-good" : "posture-bad"}`} aria-live="polite">
+      <div className="posture-status-icon">{isWaiting ? "…" : isGood ? "✓" : "!"}</div>
       <div className="posture-status-content">
-        <span className="posture-status-label">Current Posture</span>
+        <span className="posture-status-label">Current Alignment</span>
         <h2>{title}</h2>
-        <p>{message}</p>
+        <p>{message || defaultMessage}</p>
       </div>
     </div>
   );

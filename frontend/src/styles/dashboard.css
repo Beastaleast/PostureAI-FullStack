@@ -46,3 +46,84 @@
 .dashboard-header h1{font-size:clamp(25px,3vw,34px);letter-spacing:-1.1px}.dashboard-header p{font-size:13px}.dashboard-cards{gap:15px}.dashboard-card{border-radius:20px!important;padding:21px 20px;min-height:138px;background:rgba(255,255,255,.77)!important}.dashboard-card:before{width:4px;opacity:.75}.card-value{font-size:29px;letter-spacing:-1px}.card-icon{border-radius:13px;background:linear-gradient(140deg,rgba(101,87,238,.15),rgba(81,200,216,.18));color:#6258e9}.dashboard-panel,.session-summary,.recent-sessions{border-radius:22px!important;padding:24px;background:rgba(255,255,255,.77)!important;border-color:rgba(255,255,255,.95)!important;box-shadow:0 14px 38px rgba(67,82,139,.055)!important}.panel-heading h2,.quick-action-card h2,.section-header h2{font-size:18px;letter-spacing:-.4px}.trend-chart{height:225px;gap:18px}.trend-track{height:158px;max-width:42px;border-radius:22px;background:rgba(219,228,246,.55)}.trend-bar{border-radius:22px;background:linear-gradient(180deg,#a6d8f4,#8c80ef)}.trend-bar.good{background:linear-gradient(180deg,#73d9cf,#5a8fe7)}.trend-bar.average{background:linear-gradient(180deg,#e7d7ff,#8f79ec)}.trend-bar.poor{background:linear-gradient(180deg,#ffc2cf,#e779a8)}.trend-value{color:#5d6b84;font-weight:700}.quick-action-card{position:relative;overflow:hidden;background:linear-gradient(135deg,#6055e8 0%,#8862e8 55%,#53bfd7 135%)!important;min-height:270px}.quick-action-card:after{content:"";position:absolute;width:230px;height:230px;right:-100px;bottom:-140px;border:1px solid rgba(255,255,255,.25);border-radius:50%;box-shadow:0 0 0 28px rgba(255,255,255,.05),0 0 0 58px rgba(255,255,255,.04);pointer-events:none}.quick-action-card .secondary-monitor-button{background:rgba(255,255,255,.95)!important;color:#5145c8!important;box-shadow:none}.quick-action-meta{flex-wrap:wrap;color:rgba(255,255,255,.8)}.trend-count{background:#f0efff;color:#6658d9}.score-circle{border-color:#67cfc8;background:rgba(101,214,206,.08)}.score-circle span{color:#3a9e9a}.session-summary,.recent-sessions{overflow:hidden}
 @media(max-width:700px){.dashboard-header{padding:22px 20px}.dashboard-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.dashboard-card{padding:16px 14px;min-height:128px}.card-value{font-size:24px}.dashboard-panel,.session-summary,.recent-sessions{padding:18px;border-radius:18px!important}.trend-chart{gap:9px}.trend-track{max-width:32px}.dashboard-header h1{font-size:25px}}
 @media(max-width:420px){.dashboard-cards{grid-template-columns:1fr}.dashboard-header h1{font-size:23px}}
+
+
+.status-neutral { background: #f1f5f9; color: #64748b; }
+
+/* Session-history actions */
+.session-history-table .table-header,
+.session-history-table .table-row {
+  grid-template-columns: minmax(110px, 1.15fr) minmax(88px, 1fr) minmax(90px, .9fr) minmax(58px, .55fr) minmax(86px, .8fr) minmax(82px, .65fr);
+  min-width: 760px;
+  gap: 10px;
+}
+
+.session-history-table .table-row {
+  min-height: 58px;
+}
+
+.session-delete-button {
+  justify-self: start;
+  border: 1px solid #fecaca;
+  border-radius: 9px;
+  padding: 7px 10px;
+  background: #fff1f2;
+  color: #be123c;
+  font-size: 11px;
+  font-weight: 750;
+  transition: background .18s ease, border-color .18s ease, transform .18s ease;
+}
+
+.session-delete-button:hover {
+  border-color: #fda4af;
+  background: #ffe4e6;
+  transform: translateY(-1px);
+}
+
+.session-delete-button:focus-visible {
+  outline: 3px solid rgba(225, 29, 72, .22);
+  outline-offset: 2px;
+}
+
+.session-delete-error {
+  margin: 0 0 16px;
+  padding: 10px 12px;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  background: #fff1f2;
+  color: #9f1239;
+  font-size: 12px;
+}
+
+/* A collapsed sidebar gives the content back the space it should use. */
+.dashboard-page,
+.dashboard-page > *,
+.dashboard-grid,
+.dashboard-cards,
+.dashboard-panel,
+.session-summary,
+.recent-sessions {
+  min-width: 0;
+}
+
+.dashboard-page {
+  width: 100%;
+  max-width: none;
+}
+
+@media (max-width: 900px) {
+  .dashboard-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dashboard-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .session-history-table .table-header,
+  .session-history-table .table-row {
+    min-width: 760px;
+  }
+}

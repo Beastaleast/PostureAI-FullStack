@@ -1,6 +1,5 @@
-import { createContext, useContext, useState } from "react";
-
-const AuthContext = createContext(null);
+import { useState } from "react";
+import AuthContext from "./AuthContextValue";
 
 function readStoredUser() {
   try {
@@ -118,6 +117,3 @@ export function AuthProvider({ children }) {
   );
 }
 
-export function useAuth() {
-  return useContext(AuthContext);
-}

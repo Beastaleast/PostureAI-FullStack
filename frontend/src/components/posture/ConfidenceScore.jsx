@@ -8,18 +8,15 @@ function ConfidenceScore({ confidence = 0 }) {
     <div className="confidence-card">
       <div className="confidence-header">
         <div>
-          <h3>AI Confidence</h3>
-          <p>How certain the current prediction is</p>
+          <h3>Landmark Visibility</h3>
+          <p>How clearly the key body points are detected</p>
         </div>
         <strong>{displayValue}%</strong>
       </div>
-      <div className="confidence-bar" aria-label={`AI confidence ${displayValue}%`}>
+      <div className="confidence-bar" role="progressbar" aria-label="Key landmark visibility" aria-valuemin={0} aria-valuemax={100} aria-valuenow={displayValue}>
         <div className="confidence-progress" style={{ width: `${displayValue}%` }} />
       </div>
-      <div className="confidence-footer">
-        <span>Low</span>
-        <span>High</span>
-      </div>
+      <div className="confidence-footer"><span>Low visibility</span><span>Clear landmarks</span></div>
     </div>
   );
 }

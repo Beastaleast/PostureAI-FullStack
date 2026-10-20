@@ -1,16 +1,29 @@
-# React + Vite
+# PostureAI Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite frontend for the PostureAI posture-awareness prototype.
 
-Currently, two official plugins are available:
+## Run locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev
+```
 
-## React Compiler
+Open the URL printed by Vite. Allow camera access on the Live Monitor page. The first camera start loads the MediaPipe WebAssembly runtime and a pose model from public CDNs, so an internet connection is required on first load.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+For the current heuristic to be most meaningful, sit in a front-side view and keep your neck/ear point, both shoulders, hips, knees, and feet visible. The pose overlay shows detected landmarks. The status is a basic wellness cue and is not a medical assessment.
 
-## Expanding the ESLint configuration
+## Commands
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm run lint
+npm run build
+npm run preview
+```
+
+## Current implementation notes
+
+- Pose landmark inference runs in the browser; video frames are not sent to the Spring Boot backend by this version.
+- Completed sessions are saved to browser `localStorage`, under the current prototype user ID.
+- Login and registration are frontend-only prototypes, not secure authentication.
+- The Spring Boot backend currently provides a health check only; backend authentication, persistent storage, and WebSocket posture APIs remain future work.

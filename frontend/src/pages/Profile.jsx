@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 import "../styles/profile.css";
 
 function Profile() {
@@ -11,10 +11,6 @@ function Profile() {
   const [name, setName] = useState(user?.name || "");
   const [email, setEmail] = useState(user?.email || "");
 
-  useEffect(() => {
-    setName(user?.name || "");
-    setEmail(user?.email || "");
-  }, [user]);
 
   if (!user) return null;
 
@@ -71,7 +67,7 @@ function Profile() {
               <p>Keep your account details up to date.</p>
             </div>
             {!isEditing && (
-              <button className="edit-profile-button" onClick={() => { setMessage(""); setIsEditing(true); }}>Edit Profile</button>
+              <button className="edit-profile-button" onClick={() => { setName(user?.name || ""); setEmail(user?.email || ""); setMessage(""); setIsEditing(true); }}>Edit Profile</button>
             )}
           </div>
 

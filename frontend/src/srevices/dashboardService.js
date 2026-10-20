@@ -1,26 +1,13 @@
-const SESSION_STORAGE_KEY = "postureSessions";
-
-function readSessions() {
-  try {
-    return JSON.parse(localStorage.getItem(SESSION_STORAGE_KEY) || "[]");
-  } catch (error) {
-    console.error("Failed to read posture sessions:", error);
-    return [];
-  }
-}
+import sessionService from "./sessionService";
 
 const dashboardService = {
   getDashboardData(user) {
-    const sessions = readSessions();
-
+    const sessions = sessionService.getSessions();
     const userSessions = user
-      ? sessions.filter((session) => session.userId === user.id)
+      ? sessions.filter((session) => String(session.userId) === String(user.id))
       : [];
 
-    return {
-      user,
-      sessions: userSessions,
-    };
+    return { user, sessions: userSessions };
   },
 };
 

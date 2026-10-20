@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 import dashboardService from "../srevices/dashboardService";
 
 function useDashboardData() {
@@ -28,8 +28,9 @@ function useDashboardData() {
     { total: 0, good: 0, poor: 0 }
   );
 
+  const classifiedSeconds = totals.good + totals.poor;
   const postureScore =
-    totals.total > 0 ? Math.round((totals.good / totals.total) * 100) : null;
+    classifiedSeconds > 0 ? Math.round((totals.good / classifiedSeconds) * 100) : null;
 
   const recentTrend = sessions.slice(0, 7).reverse().map((session) => {
     const duration = Number(session.durationSeconds) || 0;
@@ -51,6 +52,7 @@ function useDashboardData() {
     totalMonitoringSeconds: totals.total,
     goodPostureSeconds: totals.good,
     poorPostureSeconds: totals.poor,
+    classifiedSeconds,
     postureScore,
     recentTrend,
   };

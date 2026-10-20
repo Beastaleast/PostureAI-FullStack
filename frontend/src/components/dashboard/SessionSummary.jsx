@@ -1,19 +1,6 @@
 import "../../styles/dashboard.css";
+import { formatDuration } from "../../utils/formatDuration";
 
-function formatDuration(seconds) {
-  if (!seconds) {
-    return "0m";
-  }
-
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-
-  if (hours > 0) {
-    return `${hours}h ${minutes}m`;
-  }
-
-  return `${minutes}m`;
-}
 
 function SessionSummary({
   sessions = [],
@@ -21,34 +8,21 @@ function SessionSummary({
   goodPostureSeconds = 0,
   poorPostureSeconds = 0,
 }) {
-  const hasData = sessions.length > 0;
+  const hasSessions = sessions.length > 0;
+  const classifiedSeconds = goodPostureSeconds + poorPostureSeconds;
+  const hasPostureData = classifiedSeconds > 0;
 
-  const postureScore =
-    totalMonitoringSeconds > 0
-      ? Math.round(
-        (goodPostureSeconds /
-          totalMonitoringSeconds) *
-        100
-      )
-      : null;
+  const postureScore = hasPostureData
+    ? Math.round((goodPostureSeconds / classifiedSeconds) * 100)
+    : null;
 
-  const goodPercentage =
-    totalMonitoringSeconds > 0
-      ? Math.round(
-        (goodPostureSeconds /
-          totalMonitoringSeconds) *
-        100
-      )
-      : 0;
+  const goodPercentage = hasPostureData
+    ? Math.round((goodPostureSeconds / classifiedSeconds) * 100)
+    : 0;
 
-  const poorPercentage =
-    totalMonitoringSeconds > 0
-      ? Math.round(
-        (poorPostureSeconds /
-          totalMonitoringSeconds) *
-        100
-      )
-      : 0;
+  const poorPercentage = hasPostureData
+    ? Math.round((poorPostureSeconds / classifiedSeconds) * 100)
+    : 0;
 
   return (
     <div className="session-summary">
@@ -78,15 +52,17 @@ function SessionSummary({
 
           <div>
             <h3>
-              {hasData
+              {hasPostureData
                 ? "Posture Performance"
-                : "No Data Yet"}
+                : "No Posture Data Yet"}
             </h3>
 
             <p>
-              {hasData
-                ? "Your posture statistics are based on your recorded monitoring sessions."
-                : "Start a monitoring session to begin collecting posture data."}
+              {hasPostureData
+                ? "Scores use time classified as good or poor; unclassified frames are excluded."
+                : hasSessions
+                  ? "Sessions are saved, but no clear posture classifications were recorded. Check the camera position and try again."
+                  : "Start a monitoring session to begin collecting posture data."}
             </p>
           </div>
 
@@ -119,9 +95,9 @@ function SessionSummary({
               )}
             </strong>
 
-            {hasData && (
+            {hasPostureData && (
               <small>
-                {goodPercentage}% of monitored time
+                {goodPercentage}% of classified time
               </small>
             )}
           </div>
@@ -138,9 +114,9 @@ function SessionSummary({
               )}
             </strong>
 
-            {hasData && (
+            {hasPostureData && (
               <small>
-                {poorPercentage}% of monitored time
+                {poorPercentage}% of classified time
               </small>
             )}
           </div>

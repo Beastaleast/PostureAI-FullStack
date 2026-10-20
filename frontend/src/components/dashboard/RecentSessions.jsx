@@ -1,20 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "../../styles/dashboard.css";
+import { formatDuration } from "../../utils/formatDuration";
 
-function formatDuration(seconds) {
-  if (!seconds) {
-    return "0m";
-  }
-
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-
-  if (hours > 0) {
-    return `${hours}h ${minutes}m`;
-  }
-
-  return `${minutes}m`;
-}
 
 function formatDate(dateValue) {
   if (!dateValue) {
@@ -52,19 +39,15 @@ function formatTime(dateValue) {
 }
 
 function getSessionScore(session) {
-  if (
-    typeof session.goodPostureSeconds !== "number" ||
-    typeof session.durationSeconds !== "number" ||
-    session.durationSeconds <= 0
-  ) {
-    return null;
+  if (typeof session.postureScore === "number") return session.postureScore;
+  const good = Number(session.goodPostureSeconds) || 0;
+  const poor = Number(session.poorPostureSeconds) || 0;
+  const classified = good + poor;
+  if (classified > 0) return Math.round((good / classified) * 100);
+  if (typeof session.goodPostureSeconds === "number" && Number(session.durationSeconds) > 0 && typeof session.poorPostureSeconds !== "number") {
+    return Math.round((good / Number(session.durationSeconds)) * 100);
   }
-
-  return Math.round(
-    (session.goodPostureSeconds /
-      session.durationSeconds) *
-    100
-  );
+  return null;
 }
 
 function getSessionStatus(score) {
@@ -199,7 +182,9 @@ function RecentSessions({ sessions = [] }) {
                       ? "status-good"
                       : status === "Average"
                         ? "status-average"
-                        : "status-poor"
+                        : status === "Poor"
+                          ? "status-poor"
+                          : "status-neutral"
                     }`}
                 >
                   {status}
