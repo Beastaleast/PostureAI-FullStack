@@ -1,37 +1,26 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useDashboardData from "../hooks/useDashboardData";
-import { useAuth } from "../context/useAuth";
-import sessionService from "../srevices/sessionService";
 import { formatDuration } from "../utils/formatDuration";
+import sessionService from "../srevices/sessionService";
+import { useState } from "react";
 import "../styles/dashboard.css";
 
 
 function History() {
   const navigate = useNavigate();
-  const { user } = useAuth();
-  const { sessions: dashboardSessions } = useDashboardData();
-  const [sessions, setSessions] = useState(dashboardSessions);
-  const [deleteError, setDeleteError] = useState("");
+  const { sessions, refresh } = useDashboardData();
+  const [notice, setNotice] = useState("");
 
-  const handleDeleteSession = (session) => {
-    const date = new Date(session.startTime);
-    const dateLabel = Number.isNaN(date.getTime())
-      ? "this session"
-      : `the session from ${date.toLocaleDateString()}`;
-    const confirmed = window.confirm(`Delete ${dateLabel}? This action cannot be undone.`);
+  const handleDelete = (session) => {
+    const confirmed = window.confirm("Delete this monitoring session? This action cannot be undone.");
     if (!confirmed) return;
-
     try {
-      const deleted = sessionService.deleteSession(session.id, user?.id);
-      if (!deleted) {
-        setDeleteError("This session could not be found. Refresh the page and try again.");
-        return;
-      }
-      setSessions((currentSessions) => currentSessions.filter((item) => String(item.id) !== String(session.id)));
-      setDeleteError("");
-    } catch (error) {
-      setDeleteError(error instanceof Error ? error.message : "Unable to delete this session.");
+      sessionService.deleteSession(session.id);
+      if (typeof refresh === "function") refresh();
+      setNotice("Session deleted successfully.");
+      window.setTimeout(() => setNotice(""), 3500);
+    } catch {
+      setNotice("Could not delete this session. Please try again.");
     }
   };
 
@@ -48,6 +37,7 @@ function History() {
         </button>
       </section>
 
+      {notice && <div className={notice.startsWith("Could not") ? "history-notice history-notice-error" : "history-notice"} role="status">{notice}</div>}
       <section className="recent-sessions">
         <div className="section-header">
           <div>
@@ -55,8 +45,6 @@ function History() {
             <p>{sessions.length} session{sessions.length === 1 ? "" : "s"} recorded</p>
           </div>
         </div>
-
-        {deleteError && <p className="session-delete-error" role="alert">{deleteError}</p>}
 
         {sessions.length === 0 ? (
           <div className="empty-sessions">
@@ -68,9 +56,9 @@ function History() {
             </button>
           </div>
         ) : (
-          <div className="sessions-table session-history-table">
+          <div className="sessions-table">
             <div className="table-header">
-              <span>Date</span><span>Time</span><span>Duration</span><span>Score</span><span>Status</span><span>Action</span>
+              <span>Date</span><span>Time</span><span>Duration</span><span>Score</span><span>Status</span><span>Actions</span>
             </div>
             {sessions.map((session) => {
               const duration = Number(session.durationSeconds) || 0;
@@ -94,15 +82,7 @@ function History() {
                   <span>{formatDuration(duration)}</span>
                   <strong>{score === null ? "--" : `${score}%`}</strong>
                   <span className={`session-status ${status === "Good" ? "status-good" : status === "Average" ? "status-average" : status === "Poor" ? "status-poor" : "status-neutral"}`}>{status}</span>
-                  <button
-                    type="button"
-                    className="session-delete-button"
-                    onClick={() => handleDeleteSession(session)}
-                    aria-label={`Delete session from ${date.toLocaleDateString()}`}
-                    title="Delete session"
-                  >
-                    Delete
-                  </button>
+                  <button type="button" className="session-delete-button" onClick={() => handleDelete(session)} aria-label={`Delete session from ${date.toLocaleDateString()}`}>Delete</button>
                 </div>
               );
             })}

@@ -11,17 +11,13 @@ function Navbar() {
   return (
     <header className="navbar">
       <div className="navbar-logo">
-        <Link to="/dashboard">
+        <Link to="/dashboard" aria-label="PostureAI home">
           <span className="logo-mark">P</span>
           <span>PostureAI</span>
         </Link>
       </div>
 
       <div className="navbar-right">
-        <div className="notification-icon" title="Notifications" aria-label="Notifications">
-          <span>⌁</span>
-        </div>
-
         <Link to="/profile" className="user-profile">
           <div className="user-avatar">{getInitial()}</div>
           <div className="user-info">

@@ -44,7 +44,7 @@ function Register() {
       return;
     }
 
-    navigate("/dashboard");
+    navigate("/dashboard", { state: { successMessage: "Your PostureAI account was created successfully." } });
   };
 
   return (

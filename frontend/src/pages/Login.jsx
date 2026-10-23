@@ -34,7 +34,7 @@ function Login() {
       return;
     }
 
-    navigate("/dashboard");
+    navigate("/dashboard", { state: { successMessage: "Welcome back! You are signed in." } });
   };
 
   return (
@@ -137,9 +137,7 @@ function Login() {
 
             </label>
 
-            <a href="#">
-              Forgot Password?
-            </a>
+            <span className="form-helper-text">Use the account details you registered with.</span>
 
           </div>
 

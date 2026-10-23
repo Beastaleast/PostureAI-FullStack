@@ -683,61 +683,51 @@
 .navbar-logo a{font-size:19px;letter-spacing:-.7px}.logo-mark{border-radius:13px;width:39px;height:39px;background:linear-gradient(135deg,#6557ee,#9a5ee9 65%,#50c7d9)}
 .sidebar{top:94px;left:18px;bottom:18px;width:224px;border:1px solid rgba(255,255,255,.9);border-radius:24px;background:rgba(255,255,255,.68);box-shadow:0 15px 40px rgba(72,86,145,.07);padding:8px;backdrop-filter:blur(20px)}
 .sidebar-open{width:224px}.sidebar-closed{width:76px}.sidebar-header{border:0;min-height:58px;padding:0 10px}.sidebar-title{font-size:16px;font-weight:800;letter-spacing:-.5px}.sidebar-toggle:hover{background:#f0efff}.sidebar-nav{padding:12px 4px;gap:7px}.sidebar-link{height:48px;border-radius:14px;font-size:13px;color:#69758c}.sidebar-icon{font-size:16px}.sidebar-link.active,.sidebar-link[aria-current=page]{background:linear-gradient(110deg,rgba(105,91,239,.15),rgba(78,199,218,.11));color:#5145cc;box-shadow:inset 0 0 0 1px rgba(112,101,235,.14)}.sidebar-link.active:before{display:none}.sidebar-bottom{border-top:1px solid rgba(148,163,184,.18);padding:12px 4px 8px}.logout-button{border-radius:13px}.main-content,.main-content-sidebar-open,.main-content-sidebar-closed{margin-top:94px;margin-left:260px;width:calc(100% - 278px);padding:24px 24px 32px;min-height:calc(100vh - 94px)}
-/* Keep the main area aligned with the actual sidebar width. The collapsed rail
-   must not leave the wide empty gutter that used to remain after closing it. */
-.main-content,
-.main-content-sidebar-open {
-  margin-top: 94px;
-  margin-left: 260px;
-  width: calc(100% - 278px);
-  min-width: 0;
-  padding: 24px 24px 32px;
-  min-height: calc(100vh - 94px);
-}
+@media(max-width:900px){.navbar{left:12px;right:12px;top:10px}.sidebar{top:86px;left:12px}.main-content,.main-content-sidebar-open,.main-content-sidebar-closed{margin-top:86px;margin-left:244px;width:calc(100% - 256px);padding:18px}}
+@media(max-width:768px){.navbar{height:60px;left:10px;right:10px;top:8px;border-radius:17px}.sidebar{top:78px;left:10px;bottom:10px;border-radius:20px}.main-content,.main-content-sidebar-open,.main-content-sidebar-closed{margin:78px 0 0;width:100%;padding:16px 12px;min-height:calc(100vh - 78px)}}
 
-.main-content-sidebar-closed {
-  margin-top: 94px;
-  margin-left: 112px;
-  width: calc(100% - 130px);
-  min-width: 0;
-  padding: 24px 24px 32px;
-  min-height: calc(100vh - 94px);
-}
 
-.main-content > *,
-.main-content-sidebar-open > *,
-.main-content-sidebar-closed > * {
-  min-width: 0;
-}
-
-@media(max-width:900px) {
-  .navbar { left: 12px; right: 12px; top: 10px; }
-  .sidebar { top: 86px; left: 12px; }
-  .main-content,
-  .main-content-sidebar-open {
-    margin-top: 86px;
-    margin-left: 244px;
-    width: calc(100% - 256px);
-    padding: 18px;
-  }
-  .main-content-sidebar-closed {
-    margin-top: 86px;
-    margin-left: 104px;
-    width: calc(100% - 116px);
-    padding: 18px;
-  }
-}
-
-@media(max-width:768px) {
-  .navbar { height: 60px; left: 10px; right: 10px; top: 8px; border-radius: 17px; }
-  .sidebar { top: 78px; left: 10px; bottom: 10px; border-radius: 20px; }
-  /* On mobile the sidebar overlays content, so the content stays full width. */
+/* Layout fit fix: keep content aligned with the actual sidebar state. */
+@media (min-width: 769px) {
   .main-content,
   .main-content-sidebar-open,
   .main-content-sidebar-closed {
-    margin: 78px 0 0;
+    box-sizing: border-box;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .main-content-sidebar-open {
+    margin-left: 260px;
+    width: calc(100% - 278px);
+  }
+
+  .main-content-sidebar-closed {
+    margin-left: 112px;
+    width: calc(100% - 130px);
+  }
+}
+
+@media (min-width: 769px) and (max-width: 900px) {
+  .main-content-sidebar-open {
+    margin-left: 244px;
+    width: calc(100% - 256px);
+  }
+
+  .main-content-sidebar-closed {
+    margin-left: 96px;
+    width: calc(100% - 108px);
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content,
+  .main-content-sidebar-open,
+  .main-content-sidebar-closed {
+    box-sizing: border-box;
     width: 100%;
-    padding: 16px 12px;
-    min-height: calc(100vh - 78px);
+    min-width: 0;
+    max-width: 100%;
+    margin-left: 0;
   }
 }

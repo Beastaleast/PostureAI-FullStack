@@ -47,3 +47,30 @@ button:focus-visible,a:focus-visible,input:focus-visible { outline:3px solid rgb
 :root{--ink:#172033;--muted:#748097;--line:rgba(149,165,195,.24);--panel:rgba(255,255,255,.78);--brand:#6157e8;--brand2:#9b5de5;--aqua:#51c8d8}
 body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(135deg,#e8f6fa 0%,#edf0ff 50%,#f8eafa 100%);color:var(--ink)}
 button{font-weight:650}
+
+
+/* Quality-of-life and responsive safeguards */
+html, body, #root { max-width: 100%; }
+html { overflow-x: clip; }
+body { overflow-x: clip; }
+img, video, canvas, svg { max-width: 100%; }
+button, input, select, textarea { max-width: 100%; }
+.app-layout, .main-content, .dashboard-page, .monitor-page, .profile-page { min-width: 0; max-width: 100%; }
+.app-toast { position: fixed; z-index: 3000; top: 22px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; max-width: calc(100vw - 32px); padding: 13px 18px; border: 1px solid rgba(167,243,208,.85); border-radius: 14px; background: rgba(240,253,250,.97); color: #047857; box-shadow: 0 16px 40px rgba(15,23,42,.15); font-size: 14px; font-weight: 650; animation: toast-enter .22s ease-out; }
+.app-toast span { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #10b981; color: #fff; }
+@keyframes toast-enter { from { opacity: 0; transform: translate(-50%,-8px); } to { opacity: 1; transform: translate(-50%,0); } }
+.back-to-top { position: fixed; z-index: 1200; right: 24px; bottom: 24px; width: 46px; height: 46px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.85); border-radius: 16px; background: linear-gradient(135deg,#6255ed,#8b5cf6); color: #fff; box-shadow: 0 10px 28px rgba(88,76,210,.3); font-size: 25px; line-height: 1; }
+.back-to-top:hover { transform: translateY(-3px); }
+.not-found-page { min-height: 100vh; display: grid; place-items: center; padding: 24px; background: radial-gradient(circle at 20% 20%,rgba(99,102,241,.18),transparent 36%),linear-gradient(135deg,#e8f6fa,#f8eafa); }
+.not-found-card { width: min(100%,520px); padding: clamp(28px,6vw,56px); text-align: center; border: 1px solid rgba(255,255,255,.9); border-radius: 28px; background: rgba(255,255,255,.82); box-shadow: 0 24px 70px rgba(62,72,130,.12); }
+.not-found-code { display: block; color: #6558e8; font-size: clamp(64px,14vw,100px); font-weight: 850; letter-spacing: -5px; line-height: 1.05; }
+.not-found-card h1 { margin: 12px 0; font-size: clamp(24px,5vw,32px); }
+.not-found-card p { color: #667085; line-height: 1.65; margin-bottom: 24px; }
+.not-found-home { display: inline-flex; justify-content: center; padding: 12px 20px; border-radius: 12px; color: #fff; background: linear-gradient(135deg,#6255ed,#8b5cf6); font-weight: 700; }
+.form-helper-text { color: #758198; font-size: 12px; }
+.history-notice { margin-bottom: 14px; padding: 12px 15px; border: 1px solid #a7f3d0; border-radius: 12px; background: #ecfdf5; color: #047857; font-size: 14px; }
+.history-notice-error { border-color: #fecaca; background: #fef2f2; color: #b91c1c; }
+.session-delete-button { padding: 7px 11px; border: 1px solid #fecaca; border-radius: 9px; background: #fff7f7; color: #b91c1c; font-size: 12px; font-weight: 700; }
+.session-delete-button:hover { background: #fee2e2; }
+.profile-email a, .account-info-item a { color: #5b50d9; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+@media (max-width: 640px) { .back-to-top { right: 14px; bottom: 14px; width: 42px; height: 42px; } .sessions-table { overflow-x: auto; } .table-header, .table-row { min-width: 650px; } }

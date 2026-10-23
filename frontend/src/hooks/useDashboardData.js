@@ -1,14 +1,24 @@
-import { useMemo } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../context/useAuth";
 import dashboardService from "../srevices/dashboardService";
 
 function useDashboardData() {
   const { user } = useAuth();
+  const [, setRevision] = useState(0);
+  const refresh = useCallback(() => setRevision((value) => value + 1), []);
 
-  const data = useMemo(
-    () => dashboardService.getDashboardData(user),
-    [user]
-  );
+  useEffect(() => {
+    window.addEventListener("posture-sessions-updated", refresh);
+    window.addEventListener("storage", refresh);
+    return () => {
+      window.removeEventListener("posture-sessions-updated", refresh);
+      window.removeEventListener("storage", refresh);
+    };
+  }, [refresh]);
+
+  // Recompute the small localStorage-backed summary whenever the hook renders.
+  // The refresh state setter above intentionally triggers that render after session changes.
+  const data = dashboardService.getDashboardData(user);
 
   const sessions = [...(data.sessions || [])].sort(
     (a, b) => new Date(b.startTime) - new Date(a.startTime)
@@ -55,6 +65,7 @@ function useDashboardData() {
     classifiedSeconds,
     postureScore,
     recentTrend,
+    refresh,
   };
 }
 

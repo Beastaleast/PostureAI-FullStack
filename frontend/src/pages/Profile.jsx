@@ -56,7 +56,7 @@ function Profile() {
         <div className="profile-card">
           <div className="profile-avatar">{initial}</div>
           <h2>{user.name || "User"}</h2>
-          <p className="profile-email">{user.email}</p>
+          <p className="profile-email">{user.email ? <a href={`mailto:${user.email}`}>{user.email}</a> : "Email not provided"}</p>
           <span className="profile-role">Posture Monitoring User</span>
         </div>
 
@@ -111,7 +111,7 @@ function Profile() {
 
         <div className="account-info-grid">
           <div className="account-info-item"><span className="account-info-icon">@</span><div><span>Account Name</span><strong>{user.name || "Not provided"}</strong></div></div>
-          <div className="account-info-item"><span className="account-info-icon">✉</span><div><span>Email</span><strong>{user.email || "Not provided"}</strong></div></div>
+          <div className="account-info-item"><span className="account-info-icon">✉</span><div><span>Email</span><strong>{user.email ? <a href={`mailto:${user.email}`}>{user.email}</a> : "Not provided"}</strong></div></div>
           <div className="account-info-item"><span className="account-info-icon">P</span><div><span>Service</span><strong>AI Posture Monitoring</strong></div></div>
           <div className="account-info-item"><span className="account-info-icon">✓</span><div><span>Account Status</span><strong className="account-active">Active</strong></div></div>
         </div>

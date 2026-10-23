@@ -54,43 +54,18 @@ const sessionService = {
     return this.getSessions().filter((session) => String(session.userId) === String(userId));
   },
 
-  deleteSession(sessionId, userId) {
-    if (sessionId === undefined || sessionId === null) {
-      throw new Error("A session ID is required to delete a session.");
-    }
-
-    let storedSessions;
-    try {
-      storedSessions = JSON.parse(localStorage.getItem(SESSION_STORAGE_KEY) || "[]");
-    } catch (error) {
-      console.error("Unable to read posture sessions before deletion:", error);
-      throw new Error("Saved sessions could not be read. Please try again.", { cause: error });
-    }
-
-    if (!Array.isArray(storedSessions)) {
-      throw new Error("Saved session data is invalid.");
-    }
-
-    const target = storedSessions.find((session) =>
-      String(session?.id) === String(sessionId) &&
-      (userId === undefined || String(session?.userId) === String(userId))
-    );
-
-    if (!target) {
-      return false;
-    }
-
-    const remainingSessions = storedSessions.filter((session) =>
-      !(String(session?.id) === String(sessionId) &&
-        (userId === undefined || String(session?.userId) === String(userId)))
-    );
-
-    localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(remainingSessions));
+  deleteSession(sessionId) {
+    const sessions = this.getSessions();
+    const nextSessions = sessions.filter((session) => String(session.id) !== String(sessionId));
+    if (nextSessions.length === sessions.length) return false;
+    localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(nextSessions));
+    window.dispatchEvent(new CustomEvent("posture-sessions-updated"));
     return true;
   },
 
   clearSessions() {
     localStorage.removeItem(SESSION_STORAGE_KEY);
+    window.dispatchEvent(new CustomEvent("posture-sessions-updated"));
   },
 };
 
