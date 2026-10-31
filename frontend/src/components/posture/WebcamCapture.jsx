@@ -88,7 +88,11 @@ function WebcamCapture({ onCameraStatusChange, onPostureUpdate, onDetectionStatu
       <div className="webcam-header">
         <div>
           <h2>Live Camera &amp; Alignment</h2>
-          <p>Keep your neck, both shoulders, back, hips, knees, and feet visible. A front-side camera angle works best.</p>
+         <p>
+  Keep your neck, both shoulders, back, hips, and at least one knee
+  visible for hip alignment analysis. Your feet do not need to be visible.
+  A front-side camera angle works best.
+</p>
         </div>
         {isCameraActive && (
           <div className="camera-status">

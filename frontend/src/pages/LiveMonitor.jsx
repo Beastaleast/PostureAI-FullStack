@@ -251,17 +251,20 @@ function LiveMonitor() {
               <div><span>Neck forward offset</span><strong>{postureResult.metrics.neckForwardRatio}</strong></div>
               <div><span>Back lean</span><strong>{postureResult.metrics.backLeanDegrees}°</strong></div>
               <div><span>Hip angle</span><strong>{postureResult.metrics.hipAngleDegrees === null ? "N/A" : `${postureResult.metrics.hipAngleDegrees}°`}</strong></div>
-              <div><span>Knee angle</span><strong>{postureResult.metrics.kneeAngleDegrees === null ? "N/A" : `${postureResult.metrics.kneeAngleDegrees}°`}</strong><small>{postureResult.metrics.sittingDetected ? "Seated range" : "Adjust sitting position"}</small></div>
             </div>
           )}
 
           <div className="posture-tips">
             <h3>What is checked</h3>
-            <ul>
-              <li>Shoulder level and neck-to-shoulder alignment.</li>
-              <li>Back lean plus knee bend to estimate seated position.</li>
-              <li>Keep shoulders, hips, knees, and feet visible in a front-side view; avoid strong backlighting.</li>
-            </ul>
+              <ul>
+                <li>Shoulder level and neck-to-shoulder alignment.</li>
+
+                <li>Back inclination and hip angle for sitting-posture assessment.</li>
+
+                <li>Keep both shoulders, neck, back, hips, and at least one knee visible.</li>
+
+                <li>Feet do not need to be visible. Avoid strong backlighting.</li>
+              </ul>
           </div>
         </aside>
       </div>
